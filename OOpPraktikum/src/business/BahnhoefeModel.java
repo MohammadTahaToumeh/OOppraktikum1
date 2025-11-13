@@ -6,6 +6,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import fileCreatorsToumeh.ConcreteCreatorCSV;
+import fileCreatorsToumeh.ConcreteCreatorTxt;
+import fileCreatorsToumeh.ReaderCreatorToumeh;
+import fileCreatorsToumeh.ReaderProductToumeh;
+
 public class BahnhoefeModel {
 
 	private Bahnhof bahnhof;
@@ -21,14 +26,20 @@ public class BahnhoefeModel {
 	 public void leseAusDatei(String typ) throws IOException{
     
       		
-      			BufferedReader ein = new BufferedReader(new FileReader("Bahnhof.csv"));
-      			String[] zeile = ein.readLine().split(";");
+      			ReaderCreatorToumeh a;
+      			if(typ.equals("csv")) {
+      				a = new ConcreteCreatorCSV();
+      			}else
+      				a = new ConcreteCreatorTxt();
+      			ReaderProductToumeh p = a.factoryMethod();
+      			String zeile [] = p.leseAusDatei();
+      				
       			this.bahnhof = new Bahnhof(zeile[0], 
       				zeile[1], 
       				Integer.parseInt(zeile[2]), 
       				Integer.parseInt(zeile[3]), 
       				zeile[4].split("_"));
-      				ein.close();
+      				p.schliesseDatei();
       	  			
       		
        		

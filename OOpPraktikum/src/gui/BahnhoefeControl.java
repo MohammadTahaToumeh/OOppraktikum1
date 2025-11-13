@@ -36,6 +36,10 @@ public class BahnhoefeControl {
       			bahnhoefeModel.leseAusDatei(typ);
       	  			bahnhoefeView.zeigeInformationsfensterAn(
       	  	   			"Der Bahnhof wurde gelesen!");
+      		}else if("txt".equals(typ)) {
+      			bahnhoefeModel.leseAusDatei(typ);
+  	  			bahnhoefeView.zeigeInformationsfensterAn(
+  	  	   			"Der Bahnhof wurde gelesen!");
       		}
        		else{
 	   			bahnhoefeView.zeigeInformationsfensterAn(
