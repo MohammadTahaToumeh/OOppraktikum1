@@ -16,7 +16,7 @@ public class BahnhoefeControl {
 	private BahnhoefeModel bahnhoefeModel;
 	
 	public BahnhoefeControl(Stage primaryStage) {
-		this.bahnhoefeModel = new BahnhoefeModel();
+		this.bahnhoefeModel = bahnhoefeModel.getB();
 		this.bahnhoefeView = new BahnhoefeView(this, bahnhoefeModel, primaryStage);
 	}
 

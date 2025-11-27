@@ -5,22 +5,44 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import fileCreatorsToumeh.ConcreteCreatorCSV;
 import fileCreatorsToumeh.ConcreteCreatorTxt;
 import fileCreatorsToumeh.ReaderCreatorToumeh;
 import fileCreatorsToumeh.ReaderProductToumeh;
+import ownUtil.Observable;
+import ownUtil.Observer;
 
-public class BahnhoefeModel {
-
+public class BahnhoefeModel implements Observable {
+	private Vector<Observer> a = new Vector<Observer>();
+	private static BahnhoefeModel b;
 	private Bahnhof bahnhof;
 	
+	
+	
+	
+	private BahnhoefeModel() {
+		
+	}
+	
+
+	public static BahnhoefeModel getB() {
+		if(b == null) {
+			b = new BahnhoefeModel();
+		}
+		return b;
+	}
+
+
 	public Bahnhof getBahnhof() {
 		return bahnhof;
 	}
 
 	public void setBahnhof(Bahnhof bahnhof) {
 		this.bahnhof = bahnhof;
+			notifyObservers();
+
 	}
 
 	 public void leseAusDatei(String typ) throws IOException{
@@ -40,6 +62,7 @@ public class BahnhoefeModel {
       				Integer.parseInt(zeile[3]), 
       				zeile[4].split("_"));
       				p.schliesseDatei();
+      				notifyObservers();
       	  			
       		
        		
@@ -53,4 +76,29 @@ public class BahnhoefeModel {
 	   			
 			
 		}
+
+
+	@Override
+	public void addObserver(Observer obs) {
+		this.a.addElement(obs);;
+	}
+
+
+	@Override
+	public void removeObserver(Observer obs) {
+		// TODO Auto-generated method stub
+		this.a.removeElement(obs);
+		
+	}
+
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < a.size(); i++) {
+			this.a.elementAt(i).update();
+			
+		}
+		
+	}
 }

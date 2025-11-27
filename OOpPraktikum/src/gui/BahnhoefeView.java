@@ -19,8 +19,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ownUtil.MeldungsfensterAnzeiger;
+import ownUtil.Observer;
 
-public class BahnhoefeView {
+public class BahnhoefeView implements Observer {
 	 private Pane pane     					= new  Pane();
 	    private Label lblEingabe    	 		= new Label("Eingabe");
 	    private Label lblAnzeige   	 	    	= new Label("Anzeige");
@@ -53,6 +54,7 @@ public class BahnhoefeView {
 	    	primaryStage.show();
 	    	this.initKomponenten();
 			this.initListener();
+			this.bahnhoefeModel.addObserver(this);
 		}
 		private void initKomponenten(){
 	       	// Labels
@@ -127,12 +129,13 @@ public class BahnhoefeView {
 	            @Override
 	            public void handle(ActionEvent e) {
 	        	    bahnhoefeControl.nehmeBahnhofAuf();
+	        	    update();
 	            }
 		    });
 		    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 		    	@Override
 		        public void handle(ActionEvent e) {
-		            zeigeBahnhoefeAn();
+		            update();
 		        } 
 	   	    });
 		    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
@@ -154,7 +157,7 @@ public class BahnhoefeView {
 				}	
 		    });
 	    }
-		private void zeigeBahnhoefeAn(){
+		public void update(){
 	    	if(bahnhoefeModel.getBahnhof() != null){
 	    		txtAnzeige.setText(
 	    			bahnhoefeModel.getBahnhof().gibBahnhofZurueck(' '));
@@ -208,6 +211,7 @@ public class BahnhoefeView {
 			public void setTxtAnzeige(TextArea txtAnzeige) {
 				this.txtAnzeige = txtAnzeige;
 			}
+			
 	        
 	    
 	    
